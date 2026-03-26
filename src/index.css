@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+:root {
+  --bg-color: #fcefe2; /* Fallback warm background */
+  --sky-blue: #87CEEB; /* Toy Story sky blue */
+  
+  --surface-color: rgba(255, 255, 255, 0.55); /* More transparent white for better background visibility */
+  --surface-border: rgba(255, 255, 255, 0.3);
+  
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --text-accent: #fcd34d; /* Warm yellow/gold for accents */
+  
+  --accent-color: #f472b6; /* Gentle pink */
+  --accent-hover: #db2777;
+  
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  /* Using a nice Korean font for the invitation */
+  font-family: 'Gowun Dodum', 'Noto Sans KR', sans-serif;
+  background-color: #f3f4f6; /* Outer background for desktop */
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+#root {
+  width: 100%;
+}
+
+/* 
+  Yes, this is responsive! 
+  It takes full width on mobile, and max-width 480px on desktop, 
+  acting like a mobile app screen on larger monitors.
+*/
+.mobile-app-container {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  box-shadow: 0 0 40px rgba(0,0,0,0.1);
+  
+  /* Toy story cloud background placeholder */
+  /* We use sky blue as fallback, and will apply image via var or inline style later */
+  background-color: var(--sky-blue);
+  background-size: cover;
+  background-position: center top;
+  background-repeat: repeat;
+  /* Uncomment and replace URL when ready */
+  /* background-image: url('PLACEHOLDER_URL'); */
+}
+
+/* Decorative animated clouds if no image is present */
+.cloud-decorator {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  filter: blur(2px);
+  z-index: 0;
+}
+
+@media (min-width: 481px) {
+  .mobile-app-container {
+    height: 100vh;
+    overflow-y: auto;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* Glassmorphism Panels for nice readability over clouds */
+.glass-panel {
+  background: var(--surface-color);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.content-area {
+  flex: 1;
+  padding: var(--spacing-xl) var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  z-index: 10;
+  align-items: center;
+}
+
+/* Typography elements */
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+  color: var(--accent-color);
+}
+
+/* Card Component for Invitation Sections */
+.invitation-card {
+  width: 100%;
+  padding: var(--spacing-xl) var(--spacing-lg);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.names-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+  letter-spacing: 2px;
+}
+
+.wedding-date {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+}
+
+.divider {
+  width: 40px;
+  height: 2px;
+  background-color: var(--accent-color);
+  margin: 0 auto;
+  border-radius: 2px;
+}
+
+.greeting-text {
+  font-size: 1.05rem;
+  line-height: 2;
+  color: var(--text-primary);
+  white-space: pre-wrap;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-top: var(--spacing-md);
+}
+
+/* Animations */
+@keyframes fadeInSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeInSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+.delay-1 { animation-delay: 0.2s; }
+.delay-2 { animation-delay: 0.4s; }
+.delay-3 { animation-delay: 0.6s; }
+
+/* 커서를 따라다니는 엘리먼트 속성 */
+.cursor-follower {
+  position: fixed;
+  top: -16px; /* 중앙 정렬 (이미지 약 32px 기준) */
+  left: -16px;
+  pointer-events: none; /* 클릭을 방해하지 않음 */
+  z-index: 9999;
+  transition: transform 0.1s cubic-bezier(0.2, 0.8, 0.2, 1); /* 부드럽게 따라오게 하는 효과 */
+  will-change: transform;
+}
+
+.cursor-follower img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
